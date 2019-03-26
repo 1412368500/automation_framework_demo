@@ -1,4 +1,5 @@
 # coding=utf-8
+import configparser
 import time
 from selenium.common.exceptions import NoSuchElementException
 import os.path
@@ -14,7 +15,7 @@ class BasePage(object):
     """
     定义一个页面基类，让所有页面都继承这个类，封装一些常用的页面操作方法到这个类
     """
-
+    img_path = None
     def __init__(self, driver):
         self.driver = driver
         self.to_home_url()
@@ -61,10 +62,12 @@ class BasePage(object):
             # 保存图片
 
     def get_windows_img(self):
-        """
-        在这里我们把file_path这个参数写死，直接保存到我们项目根目录的一个文件夹.\Screenshots下
-        """
-        file_path = os.path.dirname(os.path.abspath('.')) + '/screenshots/'
+        if BasePage.img_path is None:
+            config = configparser.ConfigParser()
+            path = os.path.dirname(os.path.abspath('.')) + '/config/config.ini'
+            config.read(path)
+            BasePage.img_path = config.get("img", "screenshots")
+        file_path = BasePage.img_path
         rq = time.strftime('%Y%m%d%H%M', time.localtime(time.time()))
         screen_name = file_path + rq + '.png'
         try:

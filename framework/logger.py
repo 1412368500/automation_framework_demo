@@ -1,4 +1,5 @@
 # _*_ coding: utf-8 _*_
+import configparser
 import logging
 import os.path
 import time
@@ -17,8 +18,12 @@ class Logger(object):
 
         # 创建一个handler，用于写入日志文件
         rq = time.strftime('%Y%m%d%H%M', time.localtime(time.time()))
-        # log_path = os.path.dirname(os.getcwd()) + '/Logs/'  # 项目根目录下/Logs 保存日志
-        log_path = os.path.dirname(os.path.abspath('.')) + '/logs/'
+        config = configparser.ConfigParser()
+        # file_path = os.path.dicrname(os.getcwd()) + '/config/config.ini'
+        file_path = os.path.dirname(os.path.abspath('.')) + '/config/config.ini'
+        config.read(file_path)
+
+        log_path = config.get("log", "path")
         # 如果case组织结构式 /testsuit/featuremodel/xxx.py ， 那么得到的相对路径的父路径就是项目根目录
         log_name = log_path + rq + '.log'
         fh = logging.FileHandler(log_name)
