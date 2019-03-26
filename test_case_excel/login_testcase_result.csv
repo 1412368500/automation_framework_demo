@@ -1,0 +1,6 @@
+﻿用例标题,username,password,期望登陆状态,期望验证信息,test status,错误信息
+正确的用户名和密码登录,admin,inhemeter,TRUE,admin,PASS,
+正确的用户名空密码登录,admin,,FALSE,输入的用户名或密码错误,PASS,输入的用户名或密码错误
+用户名为空登录,,inhemeter,FALSE,用户名不能为空，请重新输入!,PASS,用户名不能为空，请重新输入!
+sql注入登录,1==1,1==1,FALSE,输入的用户名或密码错误,PASS,输入的用户名或密码错误
+正确的用户名和空的正确密码登录,cuiqin,,TRUE,cuiqin,PASS,
